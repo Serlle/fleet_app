@@ -2,14 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "vehicles/edit", type: :view do
   let(:vehicle) {
-    Vehicle.create!(
-      vin: "MyString",
-      plate: "MyString",
-      brand: "MyString",
-      model: "MyString",
-      year: 1,
-      status: 1
-    )
+  FactoryBot.create(:vehicle, vin: "MyString", plate: "MyString", brand: "MyString", model: "MyString", year: 2000, status: :active)
   }
 
   before(:each) do

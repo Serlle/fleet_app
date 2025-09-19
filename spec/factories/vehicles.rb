@@ -4,7 +4,7 @@ FactoryBot.define do
     plate { "MyString" }
     brand { "MyString" }
     model { "MyString" }
-    year { 1 }
-    status { 1 }
+    year { 2020 }
+    status { 0 }
   end
 end

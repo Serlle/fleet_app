@@ -18,25 +18,29 @@ RSpec.describe "/vehicles", type: :request do
   # Vehicle. As you add validations to Vehicle, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    # Use FactoryBot to provide a valid set of attributes for a Vehicle
+    FactoryBot.attributes_for(:vehicle)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      vin: nil,
+      plate: nil
+    }
   }
 
   describe "GET /index" do
     it "renders a successful response" do
-      Vehicle.create! valid_attributes
-      get vehicles_url
+  FactoryBot.create(:vehicle)
+  get vehicles_url
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      vehicle = Vehicle.create! valid_attributes
-      get vehicle_url(vehicle)
+  vehicle = FactoryBot.create(:vehicle)
+  get vehicle_url(vehicle)
       expect(response).to be_successful
     end
   end
@@ -50,8 +54,8 @@ RSpec.describe "/vehicles", type: :request do
 
   describe "GET /edit" do
     it "renders a successful response" do
-      vehicle = Vehicle.create! valid_attributes
-      get edit_vehicle_url(vehicle)
+  vehicle = FactoryBot.create(:vehicle)
+  get edit_vehicle_url(vehicle)
       expect(response).to be_successful
     end
   end
@@ -60,13 +64,15 @@ RSpec.describe "/vehicles", type: :request do
     context "with valid parameters" do
       it "creates a new Vehicle" do
         expect {
-          post vehicles_url, params: { vehicle: valid_attributes }
+          attrs = FactoryBot.attributes_for(:vehicle).merge(status: 'active')
+          post vehicles_url, params: { vehicle: attrs }
         }.to change(Vehicle, :count).by(1)
       end
 
       it "redirects to the created vehicle" do
-        post vehicles_url, params: { vehicle: valid_attributes }
-        expect(response).to redirect_to(vehicle_url(Vehicle.last))
+  attrs = FactoryBot.attributes_for(:vehicle).merge(status: 'active')
+  post vehicles_url, params: { vehicle: attrs }
+  expect(response).to redirect_to(vehicle_url(Vehicle.last))
       end
     end
 
@@ -91,15 +97,15 @@ RSpec.describe "/vehicles", type: :request do
       }
 
       it "updates the requested vehicle" do
-        vehicle = Vehicle.create! valid_attributes
-        patch vehicle_url(vehicle), params: { vehicle: new_attributes }
+  vehicle = FactoryBot.create(:vehicle)
+  patch vehicle_url(vehicle), params: { vehicle: new_attributes }
         vehicle.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the vehicle" do
-        vehicle = Vehicle.create! valid_attributes
-        patch vehicle_url(vehicle), params: { vehicle: new_attributes }
+  vehicle = FactoryBot.create(:vehicle)
+  patch vehicle_url(vehicle), params: { vehicle: new_attributes }
         vehicle.reload
         expect(response).to redirect_to(vehicle_url(vehicle))
       end
@@ -107,8 +113,8 @@ RSpec.describe "/vehicles", type: :request do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        vehicle = Vehicle.create! valid_attributes
-        patch vehicle_url(vehicle), params: { vehicle: invalid_attributes }
+  vehicle = FactoryBot.create(:vehicle)
+  patch vehicle_url(vehicle), params: { vehicle: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -116,15 +122,15 @@ RSpec.describe "/vehicles", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested vehicle" do
-      vehicle = Vehicle.create! valid_attributes
+      vehicle = FactoryBot.create(:vehicle)
       expect {
         delete vehicle_url(vehicle)
       }.to change(Vehicle, :count).by(-1)
     end
 
     it "redirects to the vehicles list" do
-      vehicle = Vehicle.create! valid_attributes
-      delete vehicle_url(vehicle)
+  vehicle = FactoryBot.create(:vehicle)
+  delete vehicle_url(vehicle)
       expect(response).to redirect_to(vehicles_url)
     end
   end
