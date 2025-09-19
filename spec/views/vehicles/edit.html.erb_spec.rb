@@ -7,7 +7,7 @@ RSpec.describe "vehicles/edit", type: :view do
       plate: "MyString",
       brand: "MyString",
       model: "MyString",
-      year: 1,
+  year: 2000,
       status: 1
     )
   }
