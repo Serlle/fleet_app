@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Maintenance services <%= @vehicle.plate %></h1>
+
+<div id="maintenance_services">
+  <% @maintenance_services.each do |maintenance_service| %>
+    <%= render maintenance_service %>
+    <p>
+      <%= link_to "Show this maintenance service", vehicle_maintenance_service_path(maintenance_service.vehicle, maintenance_service) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New maintenance service", new_vehicle_maintenance_service_path(@vehicle) %>
+<%= link_to "Back to vehicles", vehicles_path %>
