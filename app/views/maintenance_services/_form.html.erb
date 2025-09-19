@@ -1,0 +1,58 @@
+<% parent_vehicle = maintenance_service.try(:vehicle) || (defined?(@vehicle) && @vehicle) %>
+<% form_url = nil; form_method = nil %>
+<% if parent_vehicle.present? && maintenance_service.persisted? %>
+  <% form_url = vehicle_maintenance_service_path(parent_vehicle, maintenance_service); form_method = :patch %>
+<% elsif parent_vehicle.present? %>
+  <% form_url = vehicle_maintenance_services_path(parent_vehicle) %>
+<% end %>
+
+<%= form_with(url: form_url, method: form_method, model: maintenance_service) do |form| %>
+  <% if maintenance_service.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(maintenance_service.errors.count, "error") %> prohibited this maintenance_service from being saved:</h2>
+      <ul>
+        <% maintenance_service.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <% if parent_vehicle.present? || maintenance_service.vehicle.present? %>
+      <%= form.hidden_field :vehicle_id, value: (parent_vehicle || maintenance_service.vehicle).id %>
+    <% end %>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :status %>
+    <%= form.number_field :status %>
+  </div>
+
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :cost_cents %>
+    <%= form.number_field :cost_cents %>
+  </div>
+
+  <div>
+    <%= form.label :priority %>
+    <%= form.number_field :priority %>
+  </div>
+
+  <div>
+    <%= form.label :completed_at %>
+    <%= form.datetime_field :completed_at %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

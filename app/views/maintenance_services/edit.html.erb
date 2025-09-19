@@ -1,0 +1,10 @@
+<h1>Editing maintenance service</h1>
+
+<%= render "form", maintenance_service: @maintenance_service %>
+
+<br>
+
+<div>
+  <%= link_to "Show this maintenance service", vehicle_maintenance_service_path(@maintenance_service.vehicle, @maintenance_service) %> |
+  <%= link_to "Back to maintenance services", vehicle_maintenance_services_path(@maintenance_service.vehicle) %>
+</div>
