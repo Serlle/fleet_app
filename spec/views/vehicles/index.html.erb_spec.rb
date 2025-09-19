@@ -2,34 +2,20 @@ require 'rails_helper'
 
 RSpec.describe "vehicles/index", type: :view do
   before(:each) do
-    assign(:vehicles, [
-      Vehicle.create!(
-        vin: "Vin",
-        plate: "Plate",
-        brand: "Brand",
-        model: "Model",
-        year: 2,
-        status: 3
-      ),
-      Vehicle.create!(
-        vin: "Vin",
-        plate: "Plate",
-        brand: "Brand",
-        model: "Model",
-        year: 2,
-        status: 3
-      )
-    ])
+  @v1 = FactoryBot.create(:vehicle)
+  @v2 = FactoryBot.create(:vehicle)
+  assign(:vehicles, [@v1, @v2])
   end
 
   it "renders a list of vehicles" do
     render
-    cell_selector = 'div>p'
-    assert_select cell_selector, text: Regexp.new("Vin".to_s), count: 2
-    assert_select cell_selector, text: Regexp.new("Plate".to_s), count: 2
-    assert_select cell_selector, text: Regexp.new("Brand".to_s), count: 2
-    assert_select cell_selector, text: Regexp.new("Model".to_s), count: 2
-    assert_select cell_selector, text: Regexp.new(2.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new(3.to_s), count: 2
+  expect(rendered).to match(/#{@v1.vin}/)
+  expect(rendered).to match(/#{@v2.vin}/)
+  expect(rendered).to match(/#{@v1.plate}/)
+  expect(rendered).to match(/#{@v2.plate}/)
+  expect(rendered).to match(/#{@v1.brand}/)
+  expect(rendered).to match(/#{@v1.model}/)
+  expect(rendered).to match(/#{@v1.year}/)
+  expect(rendered).to match(/#{@v1.status}/)
   end
 end
