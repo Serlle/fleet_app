@@ -4,7 +4,8 @@
 
 <div>
   <%= link_to "Edit this vehicle", edit_vehicle_path(@vehicle) %> |
-  <%= link_to "Back to vehicles", vehicles_path %>
+  <%= link_to "Back to vehicles", vehicles_path %> |
+  <%= link_to "Maintenance services", vehicle_maintenance_services_path(@vehicle) %>
 
   <%= button_to "Destroy this vehicle", @vehicle, method: :delete %>
 </div>

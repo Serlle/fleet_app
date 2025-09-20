@@ -38,8 +38,9 @@
 
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.number_field :status %>
+    <%= form.select :status, Vehicle.statuses.keys, prompt: "Select a status" %>
   </div>
+  <br>
 
   <div>
     <%= form.submit %>

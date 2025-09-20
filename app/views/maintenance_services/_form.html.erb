@@ -28,7 +28,7 @@
 
   <div>
     <%= form.label :status %>
-    <%= form.number_field :status %>
+    <%= form.select :status, MaintenanceService.statuses.keys, placeholder: "Select status" %>
   </div>
 
   <div>
@@ -43,7 +43,7 @@
 
   <div>
     <%= form.label :priority %>
-    <%= form.number_field :priority %>
+    <%= form.select :priority, MaintenanceService.priorities.keys, placeholder: "Select priority" %>
   </div>
 
   <div>
