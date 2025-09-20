@@ -4,7 +4,12 @@ class MaintenanceServicesController < ApplicationController
 
   # GET /maintenance_services or /maintenance_services.json
   def index
-  @maintenance_services = @vehicle ? @vehicle.maintenance_services : MaintenanceService.all
+    @maintenance_services = @vehicle ? @vehicle.maintenance_services : MaintenanceService.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @maintenance_services }
+    end
   end
 
   # GET /maintenance_services/1 or /maintenance_services/1.json
