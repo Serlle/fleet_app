@@ -2,13 +2,22 @@ Rails.application.routes.draw do
   resources :vehicles do
     resources :maintenance_services
   end
-  # Maintenance services are nested under vehicles only (no top-level routes yet)
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  namespace :api do
+    namespace :v1 do
+      post 'auth/login', to: 'auth#login'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+      resources :vehicles do
+        resources :maintenance_services, only: [:index, :create]
+      end
+
+      resources :maintenance_services, only: [:update]
+
+      resources :reports do
+        collection do
+          get 'maintenance_summary'
+        end
+      end
+    end
+  end
 end
