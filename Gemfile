@@ -43,6 +43,7 @@ group :development, :test do
   gem 'faker' # Generate fake data
   gem 'pry-rails' # Enhanced debugging
   gem 'pry-byebug' # Debugging with breakpoints
+  gem 'dotenv-rails' # Load environment variables from .env file
 end
 
 group :development do
