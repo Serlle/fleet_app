@@ -1,3 +1,3 @@
 class VehicleSerializer < ActiveModel::Serializer
-  attributes :id, :vin, :plate, :brand, :model, :year, :status
+  attributes :vin, :plate, :brand, :model, :year, :status
 end
