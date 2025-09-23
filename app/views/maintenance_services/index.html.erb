@@ -2,6 +2,8 @@
 
 <h1>Maintenance services <%= @vehicle.plate %></h1>
 
+<%= paginate @maintenance_services %>
+
 <div id="maintenance_services">
   <% @maintenance_services.each do |maintenance_service| %>
     <%= render maintenance_service %>

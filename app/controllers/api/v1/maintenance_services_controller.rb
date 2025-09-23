@@ -6,8 +6,8 @@ module Api
 
       # GET /api/v1/vehicles/:vehicle_id/maintenance_services
       def index
-        services = @vehicle.maintenance_services
-        render json: services
+        services = @vehicle.maintenance_services.page(params[:page]).per(params[:per_page] || 5).order(created_at: :desc)
+        render json: services, each_serializer: MaintenanceServiceSerializer, meta: pagination_meta(services)
       end
 
       # POST /api/v1/vehicles/:vehicle_id/maintenance_services

@@ -3,7 +3,7 @@ class VehiclesController < ApplicationController
 
   # GET /vehicles or /vehicles.json
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.order(created_at: :desc).page(params[:page]).per(params[:per_page] || 5)
 
     respond_to do |format|
       format.html

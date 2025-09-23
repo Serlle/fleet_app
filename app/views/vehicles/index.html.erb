@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Vehicles</h1>
+<%= paginate @vehicles %>
 
 <div id="vehicles">
   <% @vehicles.each do |vehicle| %>

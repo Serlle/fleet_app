@@ -5,6 +5,7 @@ class MaintenanceServicesController < ApplicationController
   # GET /maintenance_services or /maintenance_services.json
   def index
     @maintenance_services = @vehicle ? @vehicle.maintenance_services : MaintenanceService.all
+    @maintenance_services = @maintenance_services.order(created_at: :desc).page(params[:page]).per(params[:per_page] || 5)
 
     respond_to do |format|
       format.html

@@ -5,13 +5,13 @@ module Api
 
       # GET /api/v1/vehicles
       def index
-        vehicles = Vehicle.all
-        render json: vehicles
+        vehicles = Vehicle.order(created_at: :desc).page(params[:page]).per(params[:per_page] || 5)
+        render json: vehicles, each_serializer: VehicleSerializer, meta: pagination_meta(vehicles)
       end
 
       # GET /api/v1/vehicles/:id
       def show
-        render json: @vehicle
+        render json: @vehicle, serializer: VehicleSerializer
       end
 
       # POST /api/v1/vehicles
