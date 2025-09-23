@@ -4,7 +4,8 @@ RSpec.describe "vehicles/index", type: :view do
   before(:each) do
   @v1 = FactoryBot.create(:vehicle)
   @v2 = FactoryBot.create(:vehicle)
-  assign(:vehicles, [@v1, @v2])
+  scope = Vehicle.where(id: [@v1.id, @v2.id]).order(created_at: :desc)
+  assign(:vehicles, scope.page(1).per(2))
   end
 
   it "renders a list of vehicles" do
