@@ -3,12 +3,11 @@ require 'rails_helper'
 RSpec.describe "maintenance_services/index", type: :view do
   before(:each) do
     vehicle = FactoryBot.create(:vehicle)
-    ms1 = FactoryBot.create(:maintenance_service, vehicle: vehicle,
-                          description: "MyText", status: :completed,
-                          cost_cents: 300, priority: :high, date: Date.today)
-    ms2 = FactoryBot.create(:maintenance_service, vehicle: vehicle,
-                          description: "MyText", status: :completed,
-                          cost_cents: 300, priority: :high, date: Date.today)
+
+    ms1 = FactoryBot.create(:maintenance_service, :completed, vehicle: vehicle,
+             description: "MyText", cost_cents: 300, priority: :high, date: Date.today)
+    ms2 = FactoryBot.create(:maintenance_service, :completed, vehicle: vehicle,
+             description: "MyText", cost_cents: 300, priority: :high, date: Date.today)
 
     assign(:vehicle, vehicle)
     scope = MaintenanceService.where(id: [ms1.id, ms2.id]).order(created_at: :desc)

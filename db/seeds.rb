@@ -209,11 +209,11 @@ end
 puts "Created #{MaintenanceService.count} maintenance services"
 
 # Update vehicle statuses based on their maintenance services
-# puts "Updating vehicle statuses based on maintenance services..."
-# Vehicle.all.each do |vehicle|
-#   vehicle.update_status_based_on_services
-#   puts "Vehicle #{vehicle.plate} status updated to: #{vehicle.status}"
-# end
+puts "Updating vehicle statuses based on maintenance services..."
+Vehicle.all.each do |vehicle|
+  vehicle.update_status_based_on_services
+  puts "Vehicle #{vehicle.plate} status updated to: #{vehicle.status}"
+end
 
 puts "Seeding completed successfully!"
 puts "Total vehicles: #{Vehicle.count}"

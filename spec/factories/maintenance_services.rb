@@ -1,13 +1,20 @@
+# spec/factories/maintenance_services.rb
 FactoryBot.define do
   factory :maintenance_service do
-  association :vehicle
-  description { "Routine check" }
-  # default to :pending (0) for a new maintenance service
-  status { 0 }
-  date { Date.today }
-  cost_cents { 1000 }
-  # default to :low (0)
-  priority { 0 }
-  completed_at { nil }
+    association :vehicle
+    description { "MyText" }
+    status      { :pending }
+    priority    { :medium }
+    cost_cents  { 300 }
+    date        { Date.today - 1 }
+
+    trait :in_progress do
+      status { :in_progress }
+    end
+
+    trait :completed do
+      status       { :completed }
+      completed_at { Time.current }
+    end
   end
 end
