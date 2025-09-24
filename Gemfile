@@ -50,6 +50,8 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
+  gem 'bullet' # N+1 query detection
+  
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -70,4 +72,4 @@ gem 'kaminari' # Pagination
 gem 'jwt' # JWT authentication
 gem 'active_model_serializers' # Formatting JSON API responses
 gem 'money-rails' # Handling currency/cost_cents
-gem 'csv' # CSV export
+gem 'csv' # CSV exportg
