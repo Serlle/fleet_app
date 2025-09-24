@@ -17,6 +17,26 @@ class MaintenanceService < ApplicationRecord
 
   monetize :cost_cents, with_model_currency: :USD
 
+  scope :between_dates, ->(from, to) { where(date: from..to) }
+  scope :with_vehicle,  -> { joins(:vehicle) } # use for plate/grouping
+  scope :sum_cost_by_status,  -> { group(:status).sum(:cost_cents) }
+
+  # Hash: { "ABC123" => 12345, ... } using vehicle plate
+  scope :sum_cost_by_plate, -> {
+    with_vehicle.group('vehicles.plate').sum(:cost_cents)
+  }
+
+  # Array of [plate, total_cents], ordered desc, limited in SQL
+  def self.top_vehicles_by_cost(from:, to:, limit: 3)
+    between_dates(from, to)
+      .with_vehicle
+      .select('vehicles.plate AS plate, SUM(cost_cents) AS total_cents')
+      .group('vehicles.plate')
+      .order('total_cents DESC')
+      .limit(limit)
+      .map { |r| [r.plate, r.total_cents.to_i] }
+  end
+
   private
 
   def completed_at_required_if_completed
