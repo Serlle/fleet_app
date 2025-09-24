@@ -2,6 +2,7 @@ module Api
   module V1
     class BaseController < ApplicationController
       include Authenticable
+      include ActionController::MimeResponds
 
       # For API endpoints we don't use Rails session CSRF protection; use
       # null_session so JSON requests without CSRF token don't raise.
@@ -11,11 +12,12 @@ module Api
       skip_before_action :verify_authenticity_token
 
       # API controllers should render JSON and skip views/layouts
-      before_action :ensure_json_request
+      before_action :ensure_api_format
 
       private
 
-      def ensure_json_request
+      def ensure_api_format
+        return if request.format.csv?
         request.format = :json
       end
 
