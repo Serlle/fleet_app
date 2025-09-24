@@ -4,8 +4,7 @@ class MaintenanceServicesController < ApplicationController
 
   # GET /maintenance_services or /maintenance_services.json
   def index
-    @maintenance_services = @vehicle ? @vehicle.maintenance_services : MaintenanceService.all
-    @maintenance_services = @maintenance_services.order(created_at: :desc).page(params[:page]).per(params[:per_page] || 5)
+    @maintenance_services = base_scope.order(created_at: :desc).page(params[:page]).per(params[:per_page] || 5)
 
     respond_to do |format|
       format.html
@@ -72,9 +71,18 @@ class MaintenanceServicesController < ApplicationController
   end
 
   private
+
+    def base_scope
+      scope = @vehicle ? @vehicle.maintenance_services : MaintenanceService.all
+      scope = scope.includes(:vehicle).references(:vehicle) # Prevent N+1 query with eager loading
+      # or use eager_load(:vehicle) instead of includes + references
+      # scope = scope.eager_load(:vehicle) --- IGNORE ---
+      scope
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance_service
-      @maintenance_service = MaintenanceService.find(params[:id])
+      @maintenance_service = MaintenanceService.preload(:vehicle).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
